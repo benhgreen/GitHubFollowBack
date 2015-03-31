@@ -4,7 +4,7 @@ from github import Github, GithubException, BadCredentialsException
 from secrets import *
 
 def addUser(access_token):
-	g1 = GitHub(access_token)
+	g1 = Github(access_token)
 	u1 = None
 	try:
 		u1 = g1.get_user()
@@ -17,7 +17,7 @@ def addUser(access_token):
 
 
 	for user in getDatabase().users.find({'status': 'working'}):
-		g2 = GitHub(user['access_token'])
+		g2 = Github(user['access_token'])
 		u2 = None
 
 		try:
