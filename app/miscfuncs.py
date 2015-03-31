@@ -21,8 +21,9 @@ def addUser(access_token):
 
 		try:
 			u2 = g2.get_user()
-			u2.add_to_following(u1.login)
-			u1.add_to_following(u2.login)
+
+			u2.add_to_following(u2.get_user(u1.login))
+			u1.add_to_following(u1.get_user(u2.login))
 		except BadCredentialsException, e:
 			getDatabase().users.update({'access_token': user['access_token']}, {'$set': {'status': 'broken'}})
 
