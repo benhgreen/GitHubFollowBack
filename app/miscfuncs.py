@@ -1,6 +1,6 @@
 import sys, os
 import pymongo
-from github import Github
+from github import Github, GithubException, BadCredentialsException
 from secrets import *
 
 
@@ -19,21 +19,32 @@ def processCallback(args):
 
 def addUser(access_token):
 	g1 = GitHub(access_token)
-	u1 = g1.get_user()
+	u1 = None
+	try:
+		u1 = g1.get_user()
+	except BadCredentialsException, e:
+		return False
 
 	if userExists(u1.id):
 		getDatabase().users.update({'id': u1.id}, {'access_token': access_token, 'username': u1.login})
-		return
+		return True
 
 
-	for user in getDatabase().users.find():
+	for user in getDatabase().users.find({'status': 'working'}):
 		g2 = GitHub(user['access_token'])
-		u2 = g2.get_user()
+		u2 = None
 
-		u2.add_to_following(u1)
-		u1.add_to_following(u2)
+		try:
+			u2 = g2.get_user()
+			u2.add_to_following(u1)
+			u1.add_to_following(u2)
+		except BadCredentialsException, e:
+			getDatabase().users.update({'access_token': user['access_token']}, {'$set': {'status': 'broken'}})
 
-	getDatabase().users.insert({'access_token': access_token, 'username': u1.login, 'id': u1.id})
+
+	getDatabase().users.insert({'access_token': access_token, 'username': u1.login, 'id': u1.id, 'status': 'working'})
+
+	return True
 	
 
 def getDatabase():
