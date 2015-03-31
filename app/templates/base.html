@@ -7,10 +7,19 @@
 	<meta content="width=device-width, initial-scale=1" name="viewport">
 
 	<title>GitHub FollowBack</title>
+
+	{% if welcome %}
 	<link href="static/css/bootstrap.min.css" rel="stylesheet">
 	<link href="static/css/bootstrap-theme.min.css" rel="stylesheet">
 	<link href="static/css/cover.css" rel="stylesheet">
 	<link href="static/js/bootstrap.min.js" rel="stylesheet">
+	{% endif %}
+	<link href="../static/css/bootstrap.min.css" rel="stylesheet">
+	<link href="../static/css/bootstrap-theme.min.css" rel="stylesheet">
+	<link href="../static/css/cover.css" rel="stylesheet">
+	<link href="../static/js/bootstrap.min.js" rel="stylesheet">
+	{% if success %}
+	{% endif%}
 </head>
 
 <body>
@@ -22,6 +31,9 @@
 
 
 	<div class="cover-container">
+
+		{% if welcome %}
+		
 		<div class="row">
 
 		<h1>&nbsp;</h1>
@@ -41,6 +53,33 @@
 
 			<a href="https://github.com/login/oauth/authorize?client_id=0d434ad4ce949ae662d2&scope=user:follow"><p><input class="btn btn-lg btn-primary" value="Connect to GitHub"></p></a>
 		</div>
+
+		{% endif %}
+
+		{% if success %}
+
+		<div class="row">
+
+		<h1>&nbsp;</h1>
+
+		<h1>GitHub FollowBack</h1>
+
+		<h1>&nbsp;</h1>
+
+		<h3>Thanks for subscribing!</h3> 
+
+		<h2>&nbsp;</h2>
+
+		<h3>Remember, you can always manually remove someone you don't want to follow. They won't be re-added.</h3>
+
+		<h4>&nbsp;</h4>
+
+		<h3>If you ever want to unsubscribe, you can revoke access in your <a href="https://github.com/settings/applications"><u>GitHub account settings</u></a>.</h3>
+
+		<h1>&nbsp;</h1>
+
+		</div>
+		{% endif %}
 
 
 		<h4>&nbsp;</h4>

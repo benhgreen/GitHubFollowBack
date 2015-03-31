@@ -12,8 +12,7 @@ app.config.from_object('config')
 
 @app.route('/', methods=['GET', 'POST'])
 def root():
-	message = 'hi'
-	return render_template('welcome.html')
+	return render_template('base.html', welcome='welcome')
 
 @app.route('/callback/', methods=['GET', 'POST'])
 def callback():
@@ -29,7 +28,11 @@ def callback():
 
 	addUser(parsed_response['access_token'][0])
 
-	return render_template('success.html')
+	return redirect('/success/')
+
+@app.route('/success/', methods=['GET', 'POST'])
+def success():
+	return render_template('base.html', success='success')
 
 if __name__ == '__main__':
 	http_server = HTTPServer(WSGIContainer(app))
