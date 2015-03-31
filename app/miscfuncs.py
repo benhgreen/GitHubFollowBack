@@ -3,20 +3,6 @@ import pymongo
 from github import Github, GithubException, BadCredentialsException
 from secrets import *
 
-
-def processCallback(args):
-
-	# make sure args are all there
-	for arg in {'code', 'state'}:
-		if arg not in args:
-			return False
-
-	# check state
-	if not args['state'] == STATE:
-		return False
-
-	return True
-
 def addUser(access_token):
 	g1 = GitHub(access_token)
 	u1 = None

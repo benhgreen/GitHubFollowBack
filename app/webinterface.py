@@ -17,10 +17,6 @@ def root():
 
 @app.route('/callback/', methods=['GET', 'POST'])
 def callback():
-	# check callback
-	if not processCallback(request.args):
-		print 'initial callback failed :('
-		return ':('
 
 	# try to get access token
 	r = requests.post('https://github.com/login/oauth/access_token?client_id=%s&client_secret=%s&code=%s' % (GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, request.args['code']))
