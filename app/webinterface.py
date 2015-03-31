@@ -13,7 +13,7 @@ app.config.from_object('config')
 @app.route('/', methods=['GET', 'POST'])
 def root():
 	message = 'hi'
-	return render_template('success.html')
+	return render_template('welcome.html')
 
 @app.route('/callback/', methods=['GET', 'POST'])
 def callback():
