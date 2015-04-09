@@ -44,7 +44,7 @@ def callback():
         print 'did not get access from github'
         return ':('
 
-    add_user(parsed_response['access_token'][0], parsed_response['state'][0])
+    add_user(parsed_response['access_token'][0], request.args['state'])
 
     return redirect('/success/')
 
