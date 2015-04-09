@@ -1,4 +1,5 @@
 wtforms
+flask-wtf
 Flask
 Jinja2
 MarkupSafe
