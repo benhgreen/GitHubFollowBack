@@ -23,9 +23,9 @@ def root():
                         "&state=%s" % (GITHUB_CLIENT_ID, form.group.data))
     return render_template('base.html', welcome='welcome', form=form)
 
+
 @app.route('/callback/', methods=['GET', 'POST'])
 def callback():
-
     print "Callback received:"
     for arg in request.args:
         print "%s: %s" % (arg, request.args[arg])
@@ -35,8 +35,10 @@ def callback():
         return ':('
 
     # try to get access token
-    r = requests.post('https://github.com/login/oauth/access_token?client_id=%s&client_secret=%s&code=%s' % (
-        GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, request.args['code']))
+    r = requests.post(
+        'https://github.com/login/oauth/access_token?'
+        'client_id=%s&client_secret=%s&code=%s' % (
+            GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, request.args['code']))
 
     parsed_response = parse_qs(r.content)
 

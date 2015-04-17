@@ -15,16 +15,20 @@ def add_user(access_token, group_name):
     except BadCredentialsException:
         return False
 
-    # if user exists, check to see if the user is already subscribed to the requested group
+    # if user exists, check to see if the user is already
+    # subscribed to the requested group
     if user_exists(u1.id):
         userlists = get_database().users.find_one({'id': u1.id})['lists']
         if group_name in userlists:
             return True
 
     # get all users in requested group
-    for user in get_database().users.find({'status': 'working', 'lists': {'$in': [group_name]}}):
+    for user in get_database().users.find({'status': 'working',
+                                           'lists': {
+                                               '$in': [group_name]}}):
 
-        # generate user for each user in group and attempt to have users follow each other
+        # generate user for each user in group and attempt
+        # to have users follow each other
         g2 = Github(user['access_token'])
 
         try:
@@ -37,7 +41,8 @@ def add_user(access_token, group_name):
                 '$set': {
                     'status': 'broken'}})
 
-    # if user exists already, just update them as being subscribed to the new list
+    # if user exists already, just update them as
+    # being subscribed to the new list
     if user_exists(u1.id):
         get_database().users.update({
             'id': u1.id}, {
